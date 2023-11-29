@@ -4,12 +4,12 @@ struct ray_t
 {
 	ray_t() = default;
 	ray_t(const glm::vec3& origin, const glm::vec3& direction) :
-		< ? ? ? >,
-		< ? ? ? >
+		origin{origin},
+		direction{direction}
 	{}
 
-		 GetPoint(float distance) const { <return point> }
+	glm::vec3 GetPoint(float distance) const { return origin + (distance * direction); }
 
-	<3d origin>
-		<3d direction>
+	glm::vec3 origin{ 0 };
+	glm::vec3 direction{ 0 };
 };
