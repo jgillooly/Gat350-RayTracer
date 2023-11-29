@@ -17,10 +17,10 @@ inline color4_t RGBAToColor(const rgba_t& rgba) {
 inline rgba_t ColorToRGBA(const color4_t& color) {
 	rgba_t result;
 	
-	result |= uint8_t(glm::clamp(color.r, 0.0f, 1.0f) * 256) << 24;
-	result |= uint8_t(glm::clamp(color.g, 0.0f, 1.0f) * 256) << 16;
-	result |= uint8_t(glm::clamp(color.b, 0.0f, 1.0f) * 256) << 8;
-	result |= uint8_t(glm::clamp(color.r, 0.0f, 1.0f) * 256) << 0;
+	result |= uint8_t(glm::clamp(color.r, 0.0f, 1.0f) * 255) << 24;
+	result |= uint8_t(glm::clamp(color.g, 0.0f, 1.0f) * 255) << 16;
+	result |= uint8_t(glm::clamp(color.b, 0.0f, 1.0f) * 255) << 8;
+	result |= uint8_t(glm::clamp(color.r, 0.0f, 1.0f) * 255) << 0;
 
 	return result;
 }
