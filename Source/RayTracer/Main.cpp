@@ -23,9 +23,9 @@ int main(int, char**)
 			quit = true;
 			break;
 		}
-		//canvas.Clear({ 0, 0, 0, 1 });
+		canvas.Clear({ 0, 0, 0, 1 });
 		for (int i = 0; i < 1000; i++) { 
-			canvas.DrawPoint({ random01() * canvas.GetSize().x, random01() * canvas.GetSize().y }, { 1,1,1,1 });
+			canvas.DrawPoint({ random01() * canvas.GetSize().x, random01() * canvas.GetSize().y }, { random01(),random01(),random01(),1 });
 		}
 
 		//canvas.DrawPoint({ 1 * canvas.GetSize().x, 1 * canvas.GetSize().y }, { 1,1,1,1 });
