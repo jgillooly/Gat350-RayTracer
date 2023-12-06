@@ -8,6 +8,8 @@
 #include "Material.h"
 #include "Sphere.h"
 #include <memory>
+#include "Plane.h"
+#include "Triangle.h"
 
 int main(int, char**)
 {
@@ -33,12 +35,13 @@ int main(int, char**)
 	auto metal = std::make_shared<Metal>(color3_t{ 1, 1, 1 }, 0.0f);
 
 	// create objects -> add to scene
-	for (int i = 0; i < 10; i++)
-	{
-		std::shared_ptr<Material> material = (rand() % 2 == 0) ? std::dynamic_pointer_cast<Material>(lambertian) : std::dynamic_pointer_cast<Material>(metal);
-		auto sphere = std::make_unique<Sphere>(glm::vec3(random01()*5, random01() * 5, random01() * -5), 1, material);
-		scene.AddObject(std::move(sphere));
-	}
+	auto triangle = std::make_unique<Triangle>(glm::vec3{ -1, 0, -2 }, glm::vec3{ 1.5, 0, -2 }, glm::vec3{ 0.3, 2, -2 }, std::make_shared<Lambertian>(color3_t{ 1, 0, 0 }));
+	scene.AddObject(std::move(triangle));
+
+
+	auto material = std::make_shared<Lambertian>(color3_t{ 0.2f });
+	auto plane = std::make_unique<Plane>(glm::vec3{ 0, 0, 0 }, glm::vec3{ 0, 1, 0 }, material);
+	//scene.AddObject(std::move(plane));
 
 	bool quit = false;
 
@@ -53,7 +56,7 @@ int main(int, char**)
 			break;
 		}
 		canvas.Clear({ 0, 0, 0, 1 });
-		scene.Render(canvas,50);
+		scene.Render(canvas,1);
 		canvas.Update();
 
 		renderer.PresentCanvas(canvas);
