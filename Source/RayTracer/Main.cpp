@@ -13,7 +13,7 @@
 
 int main(int, char**)
 {
-	std::cout << "hello world!\n";
+	std::cout << "hell world!\n";
 	color4_t color = { 0.5, 0.25, 0.75, 1 };
 	rgba_t rgba = ColorToRGBA(color);
 	color4_t colorAgain = RGBAToColor(rgba);
