@@ -4,8 +4,9 @@
 #include "Material.h"
 #include "Random.h"
 #include <iostream>
+#include <iomanip>
 
-void Scene::Render(class Canvas& canvas, int numSamples)
+void Scene::Render(class Canvas& canvas, int numSamples, int depth)
 {
 	// cast ray for each point (pixel) on the canvas
 	for (int y = 0; y < canvas.GetSize().y; y++)
@@ -34,11 +35,12 @@ void Scene::Render(class Canvas& canvas, int numSamples)
 				// cast ray into scene
 				// add color value from trace
 				raycastHit_t raycastHit;
-				color3_t trace = Trace(ray, 0, 100, raycastHit, m_depth);
-				color += Trace(ray, 0, 100, raycastHit,m_depth);
+				color3_t trace = Trace(ray, 0, 100, raycastHit, depth);
+				color += Trace(ray, 0, 100, raycastHit,depth);
 				if (color.r != color.b) {
 					//std::cout << "debug :)";
 				}
+				std::cout << std::setprecision(2) << std::setw(5) << ((y / (float)canvas.GetSize().y) * 100) << "%\n";
 			}
 
 			// draw color to canvas point (pixel)
