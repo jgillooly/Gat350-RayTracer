@@ -20,7 +20,7 @@ int main(int, char**)
 {
 	const int width = 400;
 	const int height = 300;
-	const int samples = 1;
+	const int samples = 200;
 	const int depth = 5;
 
 	std::cout << "hell world!\n";
