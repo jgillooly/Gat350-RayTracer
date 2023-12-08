@@ -14,6 +14,7 @@
 
 void InitScene01(Scene& scene, const Canvas& canvas);
 void InitScene02(Scene& scene, const Canvas& canvas);
+void AddPlane(Scene& scene, float x, float y, float z, std::string facing, color3_t color);
 
 int main(int, char**)
 {
@@ -40,7 +41,7 @@ int main(int, char**)
 	Scene scene; // sky color could be set with the top and bottom color
 	scene.SetCamera(camera);
 
-	InitScene02(scene, canvas);
+	InitScene01(scene, canvas);
 
 	bool quit = false;
 
@@ -101,16 +102,44 @@ void InitScene01(Scene& scene, const Canvas& canvas)
 void InitScene02(Scene& scene, const Canvas& canvas)
 {
 	float aspectRatio = canvas.GetSize().x / canvas.GetSize().y;
-	std::shared_ptr<Camera> camera = std::make_shared<Camera>(glm::vec3{ 0, 2, 10 }, glm::vec3{ 0, 1, 0 }, glm::vec3{ 0, 1, 0 }, 20.0f, aspectRatio);
+	std::shared_ptr<Camera> camera = std::make_shared<Camera>(glm::vec3{ 0, 2, 10 }, glm::vec3{ 0, 1, 0 }, glm::vec3{ 0, 1, 0 }, 90.0f, aspectRatio);
 	scene.SetCamera(camera);
 
 	//auto triangle = std::make_unique<Triangle>(glm::vec3{ -1, 0, 0 }, glm::vec3{ 1, 0, 0 }, glm::vec3{ 0, 2, 0 }, std::make_shared<Lambertian>(color3_t{ 1, 0, 0 }));
 	//scene.AddObject(std::move(triangle));
 
-	auto plane = std::make_unique<Plane>(glm::vec3{ 0, 0, 0 }, glm::vec3{ 0, 1, 0 }, std::make_shared<Lambertian>(color3_t{ 0.2f }));
+	AddPlane(scene, 0, 0, 5, "back", { 1,1,1 });
+	AddPlane(scene, 0, -1, 0, "up", { 1,1,1 });
+	AddPlane(scene, 2, 0, 0, "left", { 0,1,0 });
+	AddPlane(scene, -2, 0, 0, "right", { 1,0,0 });
+	//AddPlane(scene, 0, 5, 0, "down", { 1,1,1 });
+
+	auto plane = std::make_unique<Plane>(glm::vec3{ 0,5, 0 }, glm::vec3{ 0,-1,0 }, std::make_shared<Emissive>(color3_t{ 1,1,1 }));
 	scene.AddObject(std::move(plane));
 
 	auto mesh = std::make_unique<Mesh>(std::make_shared<Lambertian>(color3_t{ 0, 0, 1 }));
-	mesh->Load("models/cube.obj", glm::vec3{ 0, 0.5f, 0 }, glm::vec3{ 0, 45, 0 });
+	mesh->Load("models/cube.obj", glm::vec3{ 0, 0.5f, 8 }, glm::vec3{ 0, 45, 0 });
 	scene.AddObject(std::move(mesh));
+
+}
+
+void AddPlane(Scene& scene, float x, float y, float z, std::string facing, color3_t color)
+{
+	glm::vec3 normal;
+	if (facing == "up") normal = { 0,1,0 };
+	if (facing == "down") normal = { 0,-1,0 };
+	if (facing == "left") normal = { -1,0,0 };
+	if (facing == "right") normal = { 1,0,0 };
+	if (facing == "back") normal = { 0,0,1 };
+
+
+	auto plane = std::make_unique<Plane>(glm::vec3{ x, y, z }, normal, std::make_shared<Lambertian>(color));
+	//mesh->Load("models/quad.obj", glm::vec3{ 2.0f, 1.0f, -1 }, glm::vec3{ 0, -75, 0 }, glm::vec3(2.0f));
+	std::cout << plane->m_center.x << std::endl;
+	std::cout << plane->m_center.y << std::endl;
+	std::cout << plane->m_center.z << std::endl;
+	std::cout << std::endl;
+	scene.AddObject(std::move(plane));
+
+	
 }

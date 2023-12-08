@@ -14,7 +14,7 @@ public:
 
 	bool Hit(const ray_t& ray, float minDistance, float maxDistance, raycastHit_t& raycastHit) override;
 
-private:
+public:
 	glm::vec3 m_center;
 	glm::vec3 m_normal;
 };
